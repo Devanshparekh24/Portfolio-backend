@@ -1,9 +1,9 @@
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import cloudinary from "cloudinary";
-import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary"; // Correct way for cloudinary v2
 
-dotenv.config(); // Load environment variables from .env file
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -12,12 +12,12 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2, // Use .v2 here
+  cloudinary: cloudinary,
   params: {
-    folder: 'demo', // The name of the folder in cloudinary
-    allowed_formats: ['jpg', 'png'], // Supported formats
-    transformation: [{ width: 500, height: 500, crop: 'limit' }], // Transformation options
-  }
+    folder: 'demo',
+    allowed_formats: ['jpg', 'png'],
+    transformation: [{ width: 500, height: 500, crop: 'limit' }],
+  },
 });
 
 const upload = multer({ storage });
