@@ -13,15 +13,29 @@ const createProject = asyncHandler(async (req, res) => {
 
         if (!photo) {
             return res.status(400).json(new ApiError(400, "Please upload a photo"))
+
+
+
         }
+
+
+        if (!name || !description || !startDate || !endDate) {
+            return res.status(400).json(new ApiError(400, "Please fill all the fields"))
+        }
+        // Check if the project already exists
+
         const project = await Project.create({
             name,
             description,
             startDate,
             endDate,
             photo,
-            project_Link
+            project_Link,
+            technologies: req.body.technologies.split(",").map((tech) => tech.trim()),
         });
+
+
+
         return res.status(200)
             .json(
                 new ApiResponse(200, project, "Project created successfully")
@@ -87,7 +101,7 @@ const getProjectById = asyncHandler(async (req, res) => {
 const updateProject = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, description, startDate, endDate, project_Link } = req.body;
+        const { name, description, startDate, endDate, project_Link, technologies } = req.body;
 
         const updatedData = {
             name,
@@ -95,6 +109,8 @@ const updateProject = asyncHandler(async (req, res) => {
             startDate,
             endDate,
             project_Link,
+            technologies,
+
         };
 
         // If photo is uploaded, get its Cloudinary URL
@@ -115,6 +131,10 @@ const updateProject = asyncHandler(async (req, res) => {
         return res.status(200).json(
             new ApiResponse(200, updatedProject, "Project updated successfully")
         );
+
+        console.log(updatedProject, "updatedProject");
+
+
     } catch (error) {
         return res.status(500).json(
             new ApiError(500, "Internal server error", error.message)
