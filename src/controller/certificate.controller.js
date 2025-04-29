@@ -34,7 +34,7 @@ const createCertificate = asyncHandler(async (req, res) => {
             imageUrl,
 
         });
-        console.log(certificate, "certificate created successfully");
+        // console.log(certificate, "certificate created successfully");
 
 
         return res.status(200).json(
@@ -121,7 +121,7 @@ const updateCertificate = asyncHandler(async (req, res) => {
             return res.status(404).json(new ApiError(404, "Certificate not found"));
         }
 
-        console.log(updatedCertificate, "updatedCertificate");
+        // console.log(updatedCertificate, "updatedCertificate");
 
         return res.status(200).json(
             new ApiResponse(200, updatedCertificate, "Certificate updated successfully")

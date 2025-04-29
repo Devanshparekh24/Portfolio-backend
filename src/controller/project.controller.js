@@ -132,7 +132,7 @@ const updateProject = asyncHandler(async (req, res) => {
             new ApiResponse(200, updatedProject, "Project updated successfully")
         );
 
-        console.log(updatedProject, "updatedProject");
+        // console.log(updatedProject, "updatedProject");
 
 
     } catch (error) {
@@ -148,7 +148,7 @@ const deleteProject = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
         const project = await Project.findByIdAndDelete(id);
-        console.log(project, "project")
+        // console.log(project, "project")
         if (!project) {
             return res
                 .status(404)
